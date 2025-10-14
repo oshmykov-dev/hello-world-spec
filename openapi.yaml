@@ -1,0 +1,45 @@
+openapi: 3.0.0
+info:
+  title: Hello World API
+  description: A simple API that returns a greeting message
+  version: 1.0.0
+  contact:
+    name: API Support
+    email: support@example.com
+
+servers:
+  - url: http://localhost:3000/api
+    description: Development server
+
+paths:
+  /hello:
+    get:
+      summary: Returns a greeting message
+      description: Returns a personalized greeting message
+      parameters:
+        - name: name
+          in: query
+          description: Name to include in the greeting
+          required: false
+          schema:
+            type: string
+            default: World
+      responses:
+        '200':
+          description: A greeting message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Hello, World!
+              example:
+                message: Hello, World!
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              example:
+                error: Invalid request parameters
