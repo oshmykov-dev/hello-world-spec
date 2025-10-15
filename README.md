@@ -1,5 +1,10 @@
 # Hello World API Specification
 
+## View Packages
+
+You can view all deployed packages at:  
+🔗 [GitHub Packages - hello-world-spec](https://github.com/oshmykov-dev/hello-world-spec/packages/)
+
 ## Building and Deploying
 
 ### Building the Project
@@ -140,8 +145,8 @@ Add this to your project's `pom.xml`:
 
 <dependencies>
     <dependency>
-        <groupId>com.example</groupId>
-        <artifactId>hello-world-api-spec</artifactId>
+        <groupId>com.example.helloworld</groupId>
+        <artifactId>hello-world-spec</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </dependency>
 </dependencies>
@@ -170,4 +175,5 @@ The GitHub Actions workflow will automatically publish the new version to GitHub
 
 ## License
 
-MIT
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
