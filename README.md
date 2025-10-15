@@ -1,5 +1,32 @@
 # Hello World API Specification
 
+## Building and Deploying
+
+### Building the Project
+```bash
+mvn clean install
+```
+
+### Deploying
+You can deploy the project using either of these methods:
+
+1. Using Maven directly (recommended):
+   ```bash
+   mvn clean deploy
+   ```
+   This will automatically use the settings from `.mvn/settings.xml` as specified in the project's `maven.config`.
+   
+   > **Note about `maven.config` syntax**:
+   > - In `maven.config`, the `-s` flag must be directly followed by the path without a space: `-s.mvn/settings.xml`
+   > - When running from command line, use a space: `mvn clean -s .mvn/settings.xml deploy`
+
+2. Using IntelliJ IDEA:
+   - Open the Maven tool window
+   - Click the refresh button to load all Maven projects
+   - Navigate to the `deploy` goal under the Lifecycle section and double-click it
+
+   Note: Make sure to configure IntelliJ to use the project's Maven wrapper (mvnw) or a local Maven installation that's properly configured.
+
 This project contains the OpenAPI specification for the Hello World API, packaged as a Maven artifact for easy consumption in other projects.
 
 ## Prerequisites
@@ -7,12 +34,56 @@ This project contains the OpenAPI specification for the Hello World API, package
 - Java 11 or higher
 - Maven 3.6.3 or higher
 - GitHub account with access to this repository
-- GitHub Personal Access Token with `write:packages` scope
+- GitHub Personal Access Token (PAT) with `write:packages` scope
+
+### Generating a GitHub Personal Access Token (PAT)
+
+1. Go to your GitHub account settings
+   - Click your profile photo in the top-right corner
+   - Select **Settings**
+   - In the left sidebar, click **Developer settings**
+   - Click **Personal access tokens** > **Tokens (classic)**
+   - Click **Generate new token** > **Generate new token (classic)**
+
+2. Configure your token:
+   - **Note**: Give your token a descriptive name (e.g., "Maven Package Deployment")
+   - **Expiration**: Set an expiration date or select "No expiration" (not recommended for security)
+   - **Select scopes**: Check the `write:packages` scope (under `repo` section)
+   - Click **Generate token**
+
+3. **Important**: Copy the generated token immediately and store it securely. You won't be able to see it again after leaving the page.
+
+4. Configure Maven to use your token by adding it to your Maven settings or environment variables.
+
+## IntelliJ IDEA Setup
+
+### Configuring Maven Settings
+1. Open **Preferences/Settings** (⌘, on Mac or Ctrl+Alt+S on Windows/Linux)
+2. Navigate to **Build, Execution, Deployment** > **Build Tools** > **Maven**
+3. Under **User settings file**, click the folder icon and select the `.mvn/settings.xml` file from your project
+4. > **Note**: If you see an **Override** checkbox, you don't need to check it. The `.mvn/settings.xml` will be used automatically by Maven when running from the command line or when the Maven runner is set to use the project settings.
+5. Click **Apply** and **OK**
+
+### Setting Environment Variables
+1. Open **Run/Debug Configurations** (⌥⇧R on Mac or Shift+F10 on Windows/Linux)
+2. Click **Edit Configurations...**
+3. In the left panel, select **Maven**
+4. Click the **+** button to create a new Maven configuration
+5. Name it "Deploy"
+6. In the **Command line** field, enter: `clean deploy`
+7. Click **Environment variables** (the ... button)
+8. Add these variables:
+   - `GITHUB_ACTOR` = your GitHub username
+   - `GITHUB_TOKEN` = your GitHub Personal Access Token
+9. Click **Apply** and **OK**
+
+### Running the Deployment
+1. Select your new "Deploy" configuration from the run configurations dropdown
+2. Click the green run button (or press ⌃R on Mac or Shift+F10 on Windows/Linux)
 
 ## Setup Authentication
 
-1. Create a Personal Access Token (PAT) on GitHub with `write:packages` scope
-2. Set your GitHub username and token:
+Set your GitHub username and token:
 
 ### Windows (Command Prompt)
 ```cmd
@@ -32,13 +103,15 @@ export GITHUB_ACTOR=your_github_username
 export GITHUB_TOKEN=your_github_token
 ```
 
-## Building and Deploying
+## Command Line Deployment
 
+### Building Locally
 ```bash
-# Build locally
 mvn clean install
+```
 
-# Deploy to GitHub Packages
+### Deploying to GitHub Packages
+```bash
 mvn -s .mvn/settings.xml clean deploy
 ```
 
